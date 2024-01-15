@@ -1,0 +1,37 @@
+{
+  "name": "template-cli",
+  "version": "1.0.0",
+  "description": "命令行工具创建模版框架",
+  "main": "index.js",
+  "bin": {
+    "template-cli": "bin/cli.js"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zl2589/template-cli.git"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "nanchen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zl2589/template-cli/issues"
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "homepage": "https://github.com/zl2589/template-cli#readme",
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "commander": "^11.1.0",
+    "semver": "^7.5.4"
+  }
+}
