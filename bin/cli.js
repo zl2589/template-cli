@@ -33,7 +33,6 @@ program
   .command("create")
   .description("create one new template project")
   .action((name, cmd) => {
-    console.log("创建模版项目");
     require("../lib/create");
   });
 
