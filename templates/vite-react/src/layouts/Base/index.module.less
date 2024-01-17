@@ -1,0 +1,25 @@
+.baseLayout {
+    min-height: 100vh;
+    .header {
+        position: fixed;
+        z-index: 1;
+        width: 100%
+    }
+
+    .main {
+        padding: 0 50px;
+        margin-top: 64px;
+        min-height: calc(100% - 128px);
+
+        .mainContainer {
+            margin-top: 16px;
+            padding: 24;
+            min-height: calc(100% - 64px);
+        }
+    }
+
+    .footer {
+        text-align: center;
+        height: 64px;
+    }
+}

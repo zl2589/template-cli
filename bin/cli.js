@@ -4,6 +4,22 @@ const chalk = require("chalk");
 const semver = require("semver");
 const requiredVersion = require("../package.json").engines.node;
 
+const questions = [
+  {
+    type: "input",
+    message: "Project name:",
+    name: "name",
+    default: "demo",
+  },
+  {
+    type: "list",
+    name: "template",
+    message: "Select a template",
+    choices: ["vite-react", "vue2", "vue3", "webpack-react"],
+    default: "react",
+  },
+];
+
 function checkNodeVersion(wanted, id) {
   if (!semver.satisfies(process.version, wanted)) {
     console.log(
@@ -23,17 +39,20 @@ function checkNodeVersion(wanted, id) {
 
 checkNodeVersion(requiredVersion, "template-cli");
 
-const program = require("commander");
-program
-  .version(require("../package").version)
-  .option("-T, --template", "choose a template[react, ice]")
-  .usage("<command> [options]");
+let dir = "vite-react";
+let target = "demo";
 
-program
-  .command("create")
-  .description("create one new template project")
-  .action((name, cmd) => {
-    require("../lib/create");
+const inquirer = require("inquirer");
+inquirer
+  .prompt(questions)
+  .then((answers) => {
+    const { template, name } = answers;
+    dir = template;
+    target = name;
+
+    require("../lib/create")(dir, target);
+    chalk.green("Created successfully!");
+  })
+  .catch((error) => {
+    console.error("Error:", error);
   });
-
-program.parse(process.argv);
