@@ -15,7 +15,7 @@ const questions = [
     type: "list",
     name: "template",
     message: "Select a template",
-    choices: ["vite-react", "vue2", "vue3", "webpack-react"],
+    choices: ["nest-demo", "vite-react", "vue2", "vue3", "webpack-react"],
     default: "react",
   },
 ];
