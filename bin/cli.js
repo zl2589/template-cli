@@ -1,4 +1,4 @@
-#!/usr/local/bin node
+#!/usr/bin/env node
 
 const chalk = require("chalk");
 const semver = require("semver");
@@ -15,7 +15,7 @@ const questions = [
     type: "list",
     name: "template",
     message: "Select a template",
-    choices: ["nest-demo", "vite-react", "vue2", "vue3", "webpack-react"],
+    choices: ["nest-demo", "vite-react", "vue2", "vue3"],
     default: "react",
   },
 ];

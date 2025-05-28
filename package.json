@@ -1,6 +1,6 @@
 {
   "name": "template-cli-zl",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "命令行工具创建模版框架",
   "main": "index.js",
   "bin": {
