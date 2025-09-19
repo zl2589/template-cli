@@ -5,6 +5,8 @@ const semver = require("semver");
 const { Command } = require("commander");
 const requiredVersion = require("../package.json").engines.node;
 const { version: packageVersion } = require("../package.json");
+const getTemplateList = require("../utils/getTemp");
+const { create } = require("../lib/create");
 
 function checkNodeVersion(wanted, id) {
   if (!semver.satisfies(process.version, wanted)) {
@@ -35,40 +37,48 @@ program
 program
   .command("create") // 定义一个子命令（如 template-cli create）
   .description("创建新项目")
-  .action(() => {
+  .action(async () => {
     let dir = "vite-react";
     let target = "demo";
+    try {
+      // 动态获取模板列表
+      console.log(chalk.blue("正在获取可用模板..."));
+      const templates = await getTemplateList();
+      
+      if (templates.length === 0) {
+        console.log(chalk.red("未找到任何可用的模板"));
+        process.exit(1);
+      }
 
-    const questions = [
-      {
-        type: "input",
-        message: "Project name:",
-        name: "name",
-        default: "demo",
-      },
-      {
-        type: "list",
-        name: "template",
-        message: "Select a template",
-        choices: ["nest-demo", "vite-react", "vue2-express", "vue3"],
-        default: "react",
-      },
-    ];
+      const questions = [
+        {
+          type: "input",
+          message: "Project name:",
+          name: "name",
+          default: "demo",
+        },
+        {
+          type: "list",
+          name: "template",
+          message: "Select a template",
+          choices: templates,
+          default: templates[0],
+        },
+      ];
 
-    const inquirer = require("inquirer");
-    inquirer
-      .prompt(questions)
-      .then((answers) => {
-        const { template, name } = answers;
-        dir = template;
-        target = name;
-        // 调用下载模板逻辑W
-        require("../lib/create")(dir, target);
-        chalk.green("Created successfully!");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      const inquirer = require("inquirer");
+      const answers = await inquirer.prompt(questions);
+      const { template, name } = answers;
+      dir = template;
+      target = name;
+      
+      // 调用下载模板逻辑
+      await create(dir, target);
+      console.log(chalk.green("Created successfully!"));
+    } catch (error) {
+      console.error(chalk.red("Error:"), error.message);
+      process.exit(1);
+    }
   });
 
 // 解析命令行参数（必须放在最后）
